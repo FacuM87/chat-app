@@ -5,6 +5,7 @@ export default class UserDTO {
 		this.surname = user?.surname ?? "";
 		this.nickname = user?.nickname ?? "";
 		this.gender = user?.gender ?? "";
+        this.email = user?.email ?? "";
         this.profilePic = user?.profilePic ?? "";
 	}
 }

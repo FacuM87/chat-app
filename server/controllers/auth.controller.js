@@ -2,10 +2,11 @@ import User from "../db/models/user.model.js"
 import UserDTO from "../dto/users.dto.js";
 import { createHash, validatePassword } from "../utils/bcrypt.js";
 import { generateToken } from "../utils/jwt.js";
+import Mail from "../utils/nodemailer.js";
 
 export const signupController = async (req, res) => {
     try {
-        const {name, surname, nickname, gender, password} = req.body
+        const {name, surname, nickname, gender, email, password} = req.body
 
         const user = await User.findOne({nickname})
         
@@ -13,7 +14,7 @@ export const signupController = async (req, res) => {
             return res.status(400).json({status: "fail", message: "User already exists"})
         }
 
-        if(!name || !surname || !nickname || !gender || !password) {
+        if(!name || !surname || !nickname || !gender || !email || !password) {
             return res.status(400).json({status: "fail", message: "All fields are required"})
         }
 
@@ -24,7 +25,8 @@ export const signupController = async (req, res) => {
             name,
             surname, 
             nickname, 
-            gender, 
+            gender,
+            email, 
             password: createHash(password), 
             profilePic: gender === "male" ? malePic : femalePic}
         )
@@ -33,11 +35,15 @@ export const signupController = async (req, res) => {
 
         await newUser.save()
         
+        const mailer = new Mail
+        await mailer.sendRegisterConfirmationMail(name, nickname, email, password)
+
         const cookieOptions = {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
             maxAge: 1000 * 60 * 60 * 24 * 7
         }
+
         res.cookie("jwtCookie", generateToken(userDTO), cookieOptions).status(201).json({status: "signup success", message: "User created"})
 
     } catch (error) {
