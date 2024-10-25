@@ -25,7 +25,7 @@ export const signupController = async (req, res) => {
             name,
             surname, 
             nickname, 
-            gender,
+            gender: gender.toLowerCase(),
             email, 
             password: createHash(password), 
             profilePic: gender === "male" ? malePic : femalePic}
