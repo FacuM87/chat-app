@@ -7,7 +7,7 @@ import Mail from "../utils/nodemailer.js";
 export const signupController = async (req, res) => {
     try {
         const {name, surname, nickname, gender, email, password} = req.body
-
+        
         const user = await User.findOne({nickname})
         
         if(user) {
@@ -30,21 +30,24 @@ export const signupController = async (req, res) => {
             password: createHash(password), 
             profilePic: gender === "male" ? malePic : femalePic}
         )
-        
-        const userDTO = new UserDTO(newUser)
-
+          
         await newUser.save()
         
         const mailer = new Mail
         await mailer.sendRegisterConfirmationMail(name, nickname, email, password)
-
+        
         const cookieOptions = {
             httpOnly: true,
-            secure: process.env.NODE_ENV === "production",
+            secure: false,//process.env.NODE_ENV === "production",
             maxAge: 1000 * 60 * 60 * 24 * 7
         }
+        
+        const userDTO = new UserDTO(newUser)
 
-        res.cookie("jwtCookie", generateToken(userDTO), cookieOptions).status(201).json({status: "signup success", message: "User created"})
+        const token = generateToken(userDTO)
+        console.log(token);
+        
+        res.cookie("jwtCookie", token, cookieOptions).status(201).json({status: "signup success", message: "User created"})
 
     } catch (error) {
         console.log("Error in signup controller: " + error);

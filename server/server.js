@@ -6,13 +6,18 @@ import messageRoutes from './routes/messages.routes.js'
 import usersRoutes from './routes/users.routes.js'
 import { connectToMongoDB } from './db/connectToMongo.js'
 
+import cors from 'cors' // SOLO PARA DESARROLLO
+
 dotenv.config()
 const app = express()
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(cookieParser())
-
+app.use(cors({
+    origin: "http://localhost:5173",
+    credentials: true
+})) // SOLO PARA DESARROLLO
 
 app.get("/", (req, res) => {
     console.log("Hello World!");
