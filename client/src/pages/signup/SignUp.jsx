@@ -13,7 +13,7 @@ const SignUp = () => {
 
     try {
       const serverResponse = await fetch(
-        "http://localhost:8000/api/auth/signup",
+        `${import.meta.env.VITE_AUTH_URL}/signup`,
         {
           headers: {
             "Content-Type": "application/json",
