@@ -1,15 +1,14 @@
-import Conversation from "./Conversation"
-
+import Conversation from "./Conversation";
 
 const ConversationsList = () => {
   return (
-    <div>
-        <Conversation/>
-        <Conversation/>
-        <Conversation/>
-        <Conversation/>
+    <div className="overflow-auto">
+      <Conversation />
+      <Conversation />
+      <Conversation />
+      <Conversation />
     </div>
-  )
-}
+  );
+};
 
-export default ConversationsList
+export default ConversationsList;
