@@ -1,6 +1,14 @@
+import { useState } from "react";
+import toast from "react-hot-toast";
+import { Link } from "react-router-dom";
+
 const SignUp = () => {
+  const [loading, setLoading] = useState(false);
+
   const handleOnSubmit = async (e) => {
     e.preventDefault();
+
+    setLoading(true);
 
     const userData = {
       name: e.target.name.value,
@@ -10,6 +18,18 @@ const SignUp = () => {
       gender: e.target.gender.value,
       password: e.target.password.value,
     };
+
+    if (!userData.name || !userData.surname || !userData.email || !userData.nickname || !userData.gender || !userData.password) {
+      toast.error("All fields are required");
+      setLoading(false);
+      return;
+    }
+
+    if (userData.password.length < 6){
+      toast.error("Password must be at least 6 characters long")
+      setLoading(false)
+      return
+    }
 
     try {
       const serverResponse = await fetch(
@@ -25,6 +45,9 @@ const SignUp = () => {
       );
       const data = await serverResponse.json();
       console.log(data);
+
+      setLoading(false);
+
     } catch (error) {
       console.log(error);
     }
@@ -117,8 +140,13 @@ const SignUp = () => {
           </div>
           <div className="form-control mt-6 sm:col-span-2">
             <button className="btn btn-primary w-1/2 mx-auto" type="submit">
-              Sign Up
+              {loading ? <span className="loading loading-dots loading-sm"></span> : "Sign Up"}
             </button>
+            <Link to="/login">
+              <div className="text-center">
+                <small> Already have an account? </small>
+              </div> 
+            </Link>
           </div>
         </form>
       </div>
