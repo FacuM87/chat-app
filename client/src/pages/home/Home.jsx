@@ -1,10 +1,37 @@
 import ChatBox from "../../components/ChatBox";
 import ConversationsList from "../../components/ConversationsList";
 import { SlLogout } from "react-icons/sl";
+import useUserStore from "../../hooks/userStore";
+import { useState } from "react";
 
 
 
 const Home = () => {
+  const clearUser = useUserStore((state) => state.clearUser);
+  const [loading, setLoading] = useState(false);
+
+  const handleLogout = async() => {
+    try {
+      setLoading(true);
+      const response = await fetch(`${import.meta.env.VITE_AUTH_URL}/logout`,
+        {
+          method: "POST",
+          credentials: "include",
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Logout failed");
+      }
+
+      setLoading(false);
+      clearUser();
+      
+    } catch (error) {
+      console.log(error);  
+    }
+  };
+
   return (
     <div className="flex sm:h-[450px] md:h-[550px] rounded-lg overflow-hidden bg-gray-600">
       <div className="flex-col m-4 relative">
@@ -18,7 +45,10 @@ const Home = () => {
         </form>
         <div className="divider my-2"></div>
         <ConversationsList />
-        <SlLogout className="absolute bottom-2 left-1 text-2xl cursor-pointer"/>
+        <button onClick={handleLogout}>
+          {loading && <div className="spinner"></div>}
+          <SlLogout className="absolute bottom-2 left-1 text-2xl cursor-pointer"/>
+        </button>
       </div>
       <ChatBox/>
     </div>

@@ -1,7 +1,7 @@
 import User from "../db/models/user.model.js"
 import UserDTO from "../dto/users.dto.js";
 import { createHash, validatePassword } from "../utils/bcrypt.js";
-import { generateToken } from "../utils/jwt.js";
+import { generateToken, verifyToken } from "../utils/jwt.js";
 import Mail from "../utils/nodemailer.js";
 
 export const signupController = async (req, res) => {
@@ -28,7 +28,7 @@ export const signupController = async (req, res) => {
             gender: gender.toLowerCase(),
             email, 
             password: createHash(password), 
-            profilePic: gender === "male" ? malePic : femalePic}
+            profilePic: gender.toLowerCase() === "male" ? malePic : femalePic}
         )
           
         await newUser.save()
@@ -45,7 +45,6 @@ export const signupController = async (req, res) => {
         const userDTO = new UserDTO(newUser)
 
         const token = generateToken(userDTO)
-        console.log(token);
         
         res.cookie("jwtCookie", token, cookieOptions).status(201).json({status: "signup success", message: "User created"})
 
@@ -81,6 +80,7 @@ export const loginController = async(req, res) => {
         
         return res.cookie("jwtCookie", generateToken(userDTO), cookieOptions).status(200).json({status: "success", message: "User logged in", payload:{
             name: user.name,
+            surname: user.surname,
             nickname: user.nickname,
             profilePic: user.profilePic 
         }})    
@@ -101,4 +101,34 @@ export const logoutController = (req, res) => {
     
     return res.status(200).json({ message: 'Logout successful' });
 
+}
+
+export const getUserFromToken = async (req, res) => {
+    try {
+       const jwtCookie = req.cookies.jwtCookie
+       if(!jwtCookie) {
+           console.log("No token");
+           return res.status(401).json({status: "fail", message: "Unauthorized"})
+       }else {
+           const decodedToken = verifyToken(jwtCookie)
+           console.log(decodedToken);
+
+           if(!decodedToken) {
+               return res.status(401).json({status: "fail", message: "Unauthorized"})
+           }
+           
+           const user = await User.findOne({email: decodedToken.user.email})
+           console.log(user);
+           
+           if(!user) {
+               return res.status(401).json({status: "fail", message: "Unauthorized"})
+           }
+
+           const userDTO = new UserDTO(user)
+           res.status(200).json({status: "get user success", userDTO})
+       }
+    } catch (error) {
+        console.log("Error at getUserFromToken controller: ", error)
+        res.status(500).json({status: "get user fail", message: "Internal server error while getting user: "+error.message})
+    }
 }
