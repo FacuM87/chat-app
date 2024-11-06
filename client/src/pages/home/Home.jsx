@@ -1,7 +1,7 @@
 import ChatBox from "../../components/ChatBox";
 import ConversationsList from "../../components/ConversationsList";
 import { SlLogout } from "react-icons/sl";
-import useUserStore from "../../hooks/userStore";
+import {useUserStore} from "../../hooks/userStore";
 import { useState } from "react";
 
 

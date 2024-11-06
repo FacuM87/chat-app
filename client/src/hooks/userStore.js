@@ -1,9 +1,14 @@
 import {create} from 'zustand';
 
-const useUserStore = create((set) => ({
+export const useUserStore = create((set) => ({
   user: null, 
   setUser: (userData) => set({ user: userData }), 
   clearUser: () => set({ user: null }) 
 }));
 
-export default useUserStore;
+export const useConversation = create((set) => ({
+  selectedConversation: null,
+  setSelectedConversation: (selectedConversation) => set({selectedConversation}),
+  messages: (messages) => set({messages})
+
+}))

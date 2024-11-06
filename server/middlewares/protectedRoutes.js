@@ -8,7 +8,6 @@ export const protectedRoute = async (req, res, next) => {
     }
 
     const decodedToken = verifyToken(token)
-    console.log(decodedToken);
     
     if (!decodedToken) {
         return res.status(401).json({status: "fail", message: 'Unauthorized - invalid token' })

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-hot-toast";
-import useUserStore from "../../hooks/userStore";
+import {useUserStore} from "../../hooks/userStore";
 
 const Login = () => {
   const [loading, setLoading] = useState(false);

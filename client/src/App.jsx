@@ -4,7 +4,7 @@ import Login from "./pages/login/Login.jsx";
 import SignUp from "./pages/signup/SignUp.jsx";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
-import useUserStore from "./hooks/userStore.js";
+import {useUserStore} from "./hooks/userStore.js";
 import { useEffect } from "react";
 
 function App() {

@@ -1,40 +1,15 @@
+import { useConversation } from "../hooks/userStore"
 import Message from "./Message"
 
 
 const MessagesContainer = () => {
-  return (
-    <div className="flex flex-col overflow-auto p-4">
+    const {selectedConversation} = useConversation()
+
+    return (
+    <div className="flex flex-col overflow-auto p-4 flex-grow">
+        {!selectedConversation? "Select a conversation" : <Message/>}
         
-        <Message/>
-        <Message/>
-        <Message/>
-        <Message/>
-        <Message/>
-        <Message/>
-        <Message/>
-        <Message/>
-        <Message/>
-        <Message/>
-        <Message/>
-        <Message/>
-        <Message/>
-        <Message/>
-        <Message/>
-        <Message/>
-        <Message/>
-        <Message/>
-        <Message/>
-        <Message/>
-        <Message/>
-        <Message/>
-        <Message/>
-        <Message/>
-        <Message/>
-        <Message/>
-        <Message/>
-        <Message/>
-        <Message/>
-        <Message/>
+             
     </div>
   )
 }

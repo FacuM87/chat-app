@@ -111,14 +111,12 @@ export const getUserFromToken = async (req, res) => {
            return res.status(401).json({status: "fail", message: "Unauthorized"})
        }else {
            const decodedToken = verifyToken(jwtCookie)
-           console.log(decodedToken);
 
            if(!decodedToken) {
                return res.status(401).json({status: "fail", message: "Unauthorized"})
            }
            
            const user = await User.findOne({email: decodedToken.user.email})
-           console.log(user);
            
            if(!user) {
                return res.status(401).json({status: "fail", message: "Unauthorized"})
