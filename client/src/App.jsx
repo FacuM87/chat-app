@@ -13,30 +13,36 @@ function App() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const checkJWT = async () =>{
-      const response = await fetch(`${import.meta.env.VITE_AUTH_URL}/validateToken`, 
-        {
+    const checkJWT = async () => {
+      try {
+        const response = await fetch(`${import.meta.env.VITE_AUTH_URL}/validateToken`, {
           headers: { "Content-Type": "application/json" },
           method: "GET",
           credentials: "include"
+        });
+  
+        if (response.ok) {
+          const data = await response.json();
+          setUser(data.userDTO);
+          navigate("/"); 
+        } else {
+          navigate("/login"); 
         }
-      )
-      const data = await response.json();
-      console.log(data);
-      setUser(data.userDTO)
-      
-    }
-
-    checkJWT()
-  },[setUser])
+      } catch (error) {
+        console.error("Error checking JWT:", error);
+        navigate("/login"); 
+      }
+    };
+  
+    checkJWT();
+  }, [setUser, navigate]);
 
   useEffect(() => {
-    if (!user) {
-      navigate("/login");
-    } else {
-      navigate("/");
+    if (user !== undefined) {
+      navigate(user ? "/" : "/login");
     }
   }, [user, navigate]);
+  
 
   return (
     <div className="p-4 h-screen w-screen flex justify-center items-center bg-gray-200">
