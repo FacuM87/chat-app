@@ -45,6 +45,8 @@ const SignUp = () => {
       );
       const data = await serverResponse.json();
       console.log(data);
+      toast.success("Your credentials have been sent to your email.")
+      toast.success("Your account has been created successfully.");
 
       setLoading(false);
 

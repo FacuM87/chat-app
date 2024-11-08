@@ -2,54 +2,46 @@ import "./App.css";
 import Home from "./pages/home/Home.jsx";
 import Login from "./pages/login/Login.jsx";
 import SignUp from "./pages/signup/SignUp.jsx";
-import { Routes, Route, useNavigate } from "react-router-dom";
-import { Toaster } from "react-hot-toast";
-import {useUserStore} from "./hooks/userStore.js";
+import { Routes, Route, Navigate } from "react-router-dom";
+import toast, { Toaster } from "react-hot-toast";
+import { useUserStore } from "./hooks/userStore.js";
 import { useEffect } from "react";
 
 function App() {
   const user = useUserStore((state) => state.user);
   const setUser = useUserStore((state) => state.setUser);
-  const navigate = useNavigate();
 
+-
   useEffect(() => {
     const checkJWT = async () => {
       try {
         const response = await fetch(`${import.meta.env.VITE_AUTH_URL}/validateToken`, {
           headers: { "Content-Type": "application/json" },
           method: "GET",
-          credentials: "include"
+          credentials: "include",
         });
-  
+
         if (response.ok) {
           const data = await response.json();
           setUser(data.userDTO);
-          navigate("/"); 
         } else {
-          navigate("/login"); 
+          setUser(null); 
         }
       } catch (error) {
-        console.error("Error checking JWT:", error);
-        navigate("/login"); 
+        toast.error(error.message);
+        setUser(null);
       }
     };
-  
-    checkJWT();
-  }, [setUser, navigate]);
 
-  useEffect(() => {
-    if (user !== undefined) {
-      navigate(user ? "/" : "/login");
-    }
-  }, [user, navigate]);
-  
+    checkJWT();
+  }, [setUser]);
 
   return (
     <div className="p-4 h-screen w-screen flex justify-center items-center bg-gray-200">
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<SignUp />} />
+        <Route path="/" element={user ? <Home /> : <Navigate to={"/login"} />} />
+        <Route path="/login" element={user ? <Navigate to={"/"} /> : <Login />} />
+        <Route path="/signup" element={user ? <Navigate to={"/"} /> : <SignUp />} />
       </Routes>
       <Toaster />
     </div>

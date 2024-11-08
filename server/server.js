@@ -19,12 +19,6 @@ app.use(cors({
     credentials: true
 })) // SOLO PARA DESARROLLO
 
-app.get("/", (req, res) => {
-    console.log("Hello World!");
-    
-    res.send("Hello World!")
-})
-
 app.use("/api/auth", authRoutes)
 app.use("/api/messages", messageRoutes)
 app.use("/api/users", usersRoutes)
