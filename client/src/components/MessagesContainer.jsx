@@ -5,9 +5,7 @@ import toast from "react-hot-toast"
 
 
 const MessagesContainer = () => {
-    const {messages, selectedConversation, setMessages, setSelectedConversation} = useConversation()
-    console.log(selectedConversation);
-    
+    const {messages, selectedConversation, setMessages, setSelectedConversation} = useConversation()  
     
     useEffect(() => {
         const getMessages = async() =>{

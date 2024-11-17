@@ -21,8 +21,6 @@ const ChatBoxInput = () => {
             return;
         }
         
-        console.log(message);
-        
         const sendMessage = async() =>{
             try {
                 const response = await fetch(`${import.meta.env.VITE_SEND_MESSAGES_URL}/${selectedConversation.userId}`, {
@@ -32,7 +30,6 @@ const ChatBoxInput = () => {
                     body: JSON.stringify({message})
                 })
                 const data = await response.json()
-                console.log({data});
 
                 if (!response.ok) {
                     toast.error(data);
@@ -41,11 +38,9 @@ const ChatBoxInput = () => {
                         setTimeout(() => clearUser(), 3000); 
                     }
                     return;
-                }
-                console.log({messages});                
+                }             
                 
                 await setMessages([... messages, data])
-                console.log({messages});
                 
                 e.target.reset(); 
 
