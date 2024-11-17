@@ -9,6 +9,6 @@ export const useUserStore = create((set) => ({
 export const useConversation = create((set) => ({
   selectedConversation: null,
   setSelectedConversation: (selectedConversation) => set({selectedConversation}),
-  messages: (messages) => set({messages})
-
+  messages: [],
+  setMessages: (messages) => set({messages})
 }))

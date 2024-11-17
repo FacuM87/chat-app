@@ -21,6 +21,10 @@ function App() {
           credentials: "include",
         });
 
+        if (!response.ok) {
+          return
+        }
+
         if (response.ok) {
           const data = await response.json();
           setUser(data.userDTO);

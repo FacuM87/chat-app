@@ -1,15 +1,14 @@
 import { TbSend2 } from "react-icons/tb";
-import { useConversation } from "../hooks/userStore";
+import { useConversation, useUserStore } from "../hooks/userStore";
 import toast from "react-hot-toast";
 
 
 
 const ChatBoxInput = () => {
-
-    const {selectedConversation} = useConversation();
+    const {clearUser} = useUserStore();	
+    const {selectedConversation, setMessages, messages} = useConversation();
     const handleOnSubmit = (e) => {
         e.preventDefault();
-        console.log(selectedConversation);
         const message = e.target.messageInput.value;
         
         if (!selectedConversation) {
@@ -34,8 +33,24 @@ const ChatBoxInput = () => {
                 })
                 const data = await response.json()
                 console.log({data});
+
+                if (!response.ok) {
+                    toast.error(data);
+                    if (data.message === "Unauthorized") {
+                        toast.error("Session expired. You are being redirected to the login page.");
+                        setTimeout(() => clearUser(), 3000); 
+                    }
+                    return;
+                }
+                console.log({messages});                
+                
+                await setMessages([... messages, data])
+                console.log({messages});
+                
                 e.target.reset(); 
+
             } catch (error) {
+                console.log(error);
                 toast.error(error.message);
             }
         }

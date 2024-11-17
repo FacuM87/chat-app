@@ -18,7 +18,7 @@ export const sendMessage = async (req, res) => {
             message
         })
 
-        const newMessageId = newMessage._id
+        const messageId = newMessage._id
       
         let conversation = await Conversation.findOne({members: {$all: [receiver_id, senderId]}})
 
@@ -27,12 +27,12 @@ export const sendMessage = async (req, res) => {
             conversation = await Conversation.create({members: [receiver_id, senderId]})
         }
         
-        conversation.messages.push(newMessageId)
+        conversation.messages.push(messageId)
         
         await newMessage.save()
         await conversation.save()
 
-        res.status(200).json({status:"message sent",receiver_id, senderId, message}) 
+        res.status(200).json(newMessage) 
         
     } catch (error) {
         console.log("Error at sendMessage controller: ", error);
@@ -56,7 +56,7 @@ export const getMessages = async (req, res) => {
             return res.status(200).json([]);
         }
         
-        res.status(200).json({status:"get messages success", messages: conversation.messages})
+        res.status(200).json(conversation.messages)
         
     } catch (error) {
         console.log("Error at getMessages controller: ", error);

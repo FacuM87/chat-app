@@ -49,17 +49,17 @@ const Login = () => {
       console.log(data);
 
       if (data.status == "success") {
-        toast.success("Logged in successfully");
-
+        
         const userData = {
+          userId: data.payload.userId,
           name: data.payload.name,
           surname: data.payload.surname,
           nickname: data.payload.nickname,
           profilePic: data.payload.profilePic,
         };
-
-        //localStorage.setItem("userData", JSON.stringify(userData));
-        setUser(userData);
+        
+        await setUser(userData);
+        toast.success("Logged in successfully");
       }else{
         toast.error(data.message)
       }
@@ -68,6 +68,8 @@ const Login = () => {
 
     } catch (error) {
       console.log("Login error at handleOnSubmit", error);
+    } finally {
+      setLoading(false);
     }
   };
   return (

@@ -79,6 +79,7 @@ export const loginController = async(req, res) => {
         const userDTO = new UserDTO(user)
         
         return res.cookie("jwtCookie", generateToken(userDTO), cookieOptions).status(200).json({status: "success", message: "User logged in", payload:{
+            userId: user._id,
             name: user.name,
             surname: user.surname,
             nickname: user.nickname,
