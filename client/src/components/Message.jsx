@@ -1,11 +1,12 @@
 /* eslint-disable react/prop-types */
 import { useConversation, useUserStore } from "../hooks/userStore";
+import { formatDate } from "../utils.js";
 
 const Message = ({message}) => {
   const {user} = useUserStore();
   const {selectedConversation} = useConversation()
   const fromMe = user.userId === message.from
-  
+
   return (
     <>
       <div className= {`chat ${fromMe ? "chat-end" : "chat-start"} `}>
@@ -19,7 +20,7 @@ const Message = ({message}) => {
         </div>
         <div className="chat-header">
           {}
-          <time className="text-xs opacity-50">12:45</time>
+          <time className="text-xs opacity-50">{formatDate(message.createdAt)}</time>
         </div>
         <div className="chat-bubble">{message.message}</div>
         <div className="chat-footer opacity-50">Delivered</div>
