@@ -10,7 +10,7 @@ export const SocketContextProvider = ({ children }) => {
     const [socket, setSocket] = useState(null);
     const [onlineUsers, setOnlineUsers] = useState([]);
     const authUser = useUserStore((state) => state.user);
-
+    /* eslint-disable react-hooks/exhaustive-deps */
     useEffect(() => {
         if (authUser) {
             const socket = io("http://localhost:8000", {
@@ -28,7 +28,7 @@ export const SocketContextProvider = ({ children }) => {
                 setSocket(null);
             }
         }
-    }, [authUser]);
+    }, [authUser]); 
 
     return  <socketContext.Provider value={{socket, onlineUsers}}>
                 {children}
