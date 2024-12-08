@@ -1,4 +1,3 @@
-import "./App.css";
 import Home from "./pages/home/Home.jsx";
 import Login from "./pages/login/Login.jsx";
 import SignUp from "./pages/signup/SignUp.jsx";
@@ -21,19 +20,24 @@ function App() {
           credentials: "include",
         });
 
+        if (response.status === 401) {
+          await setUser(null); 
+          return;
+        }
+        
         if (!response.ok) {
           return
         }
 
         if (response.ok) {
           const data = await response.json();
-          setUser(data.userDTO);
+          await setUser(data.userDTO);
         } else {
-          setUser(null); 
+          await setUser(null); 
         }
       } catch (error) {
         toast.error(error.message);
-        setUser(null);
+        await setUser(null);
       }
     };
 

@@ -1,50 +1,70 @@
-import { useEffect } from "react"
-import { useConversation } from "../hooks/userStore"
-import Message from "./Message"
-import toast from "react-hot-toast"
-
+import { useEffect, useRef } from "react";
+import { useConversation } from "../hooks/userStore";
+import Message from "./Message";
+import toast from "react-hot-toast";
+import useListenMessages from "../hooks/useListenMessages";
 
 const MessagesContainer = () => {
-    const {messages, selectedConversation, setMessages, setSelectedConversation} = useConversation()  
-    
-    useEffect(() => {
-        const getMessages = async() =>{
-            try {
-              const response = await fetch(`${import.meta.env.VITE_GET_MESSAGES_URL}/${selectedConversation.userId}`,{
-                method: "GET",
-                credentials: "include"
-              })
+  const {
+    messages,
+    selectedConversation,
+    setMessages,
+    setSelectedConversation,
+  } = useConversation();
+  const lastMessageRef = useRef();
+  useListenMessages()
 
-              const data = await response.json()
-              console.log(data);
-              await setMessages(data)
-              
-            } catch (error) {
-              console.log(error);
-              toast.error(error.message); 
-            } 
-        }
+  useEffect(() => {
+    const getMessages = async () => {
+      try {
+        const response = await fetch(
+          `${import.meta.env.VITE_GET_MESSAGES_URL}/${
+            selectedConversation.userId
+          }`,
+          {
+            method: "GET",
+            credentials: "include",
+          }
+        );
 
-        if (selectedConversation?.userId) {getMessages()}    
-     },[selectedConversation?.userId, setMessages])
-    
-    useEffect(() => {
-        return () => setSelectedConversation(null)
-     },[setSelectedConversation])
+        const data = await response.json();
+        console.log(data);
+        await setMessages(data);
+      } catch (error) {
+        console.log(error);
+        toast.error(error.message);
+      }
+    };
 
-    useEffect(() => {
-      console.log({messages});
-    },[messages]) 
+    if (selectedConversation?.userId) {
+      getMessages();
+    }
+  }, [selectedConversation?.userId, setMessages]);
 
-    return (
+  useEffect(() => {
+    return () => setSelectedConversation(null);
+  }, [setSelectedConversation]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      lastMessageRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, 100);
+  }, [messages]);
+
+  return (
     <div className="flex flex-col overflow-auto p-4 flex-grow">
-        {!selectedConversation && "Select a conversation"}
-        {selectedConversation && messages.length === 0 && "Send a message"}
+      {!selectedConversation && "Select a conversation"}
+      {selectedConversation && messages.length === 0 && "Send a message"}
 
-        {selectedConversation && messages.length > 0 && messages.map((message) => (<Message key={message._id} message={message} />))}
-                    
+      {selectedConversation &&
+        messages.length > 0 &&
+        messages.map((message) => (
+          <div key={message._id} ref={lastMessageRef}>
+            <Message message={message} />
+          </div>
+        ))}
     </div>
-  )
-}
+  );
+};
 
-export default MessagesContainer
+export default MessagesContainer;

@@ -5,11 +5,11 @@ import authRoutes from './routes/auth.routes.js'
 import messageRoutes from './routes/messages.routes.js'
 import usersRoutes from './routes/users.routes.js'
 import { connectToMongoDB } from './db/connectToMongo.js'
+import {app, server } from './socket/socket.js'
 
 import cors from 'cors' // SOLO PARA DESARROLLO
 
 dotenv.config()
-const app = express()
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
@@ -23,7 +23,7 @@ app.use("/api/auth", authRoutes)
 app.use("/api/messages", messageRoutes)
 app.use("/api/users", usersRoutes)
 
-app.listen(process.env.PORT, () => {
+server.listen(process.env.PORT, () => {
     connectToMongoDB()
     console.log(`Server listening on port ${process.env.PORT}`)
 })
