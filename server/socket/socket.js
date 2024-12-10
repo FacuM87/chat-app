@@ -9,9 +9,10 @@ const app = express()
 app.use(cookieParser())
 
 const server = http.createServer(app);
+//const deploy = process.env.NODE_ENV === "development" ? "http://localhost:5173": process.env.PROD_ORIGIN
 const io = new Server(server, {
     cors: {
-        origin: process.env.NODE_ENV === "development" ? "http://localhost:5173": process.env.PROD_ORIGIN,
+        origin: process.env.PROD_ORIGIN,
         credentials: true,
     },
 });
