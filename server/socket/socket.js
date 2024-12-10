@@ -11,11 +11,14 @@ app.use(cookieParser())
 const server = http.createServer(app);
 
 const io = new Server(server, {
-    cors: process.env.NODE_ENV === "development" ? {
-        origin: "http://localhost:5173",
+    cors: {
+        origin: process.env.NODE_ENV === "development" 
+            ? "http://localhost:5173" // Desarrollo
+            : "https://facu-chat-app.onrender.com", // Producción
         credentials: true,
-    } : {},
+    },
 });
+
 
 export const getReceiverSocketId = (receiverId) => userSocketMap[receiverId]
 

@@ -13,7 +13,9 @@ export const SocketContextProvider = ({ children }) => {
     /* eslint-disable react-hooks/exhaustive-deps */
     useEffect(() => {
         if (authUser) {
-            const socket = io("http://localhost:8000", {
+            const serverURL = window.location.hostname === 'localhost'? "http://localhost:8000" : "https://facu-chat-app.onrender.com"
+
+            const socket = io(serverURL, {
                 withCredentials: true,
                 query: { userId: authUser.userId },
             })
