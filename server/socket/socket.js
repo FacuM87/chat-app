@@ -9,12 +9,12 @@ const app = express()
 app.use(cookieParser())
 
 const server = http.createServer(app);
-//const deploy = process.env.NODE_ENV === "development" ? "http://localhost:5173": process.env.PROD_ORIGIN
+
 const io = new Server(server, {
-    cors: {
-        origin: process.env.PROD_ORIGIN,
+    cors: process.env.NODE_ENV === "development" ? {
+        origin: "http://localhost:5173",
         credentials: true,
-    },
+    } : {},
 });
 
 export const getReceiverSocketId = (receiverId) => userSocketMap[receiverId]
