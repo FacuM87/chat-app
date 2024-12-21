@@ -22,7 +22,7 @@ Real-time chat application built with **MERN Stack** (MongoDB, Express, React, a
 
 ```sh
 git clone https://github.com/FacuM87/chat-app.git
-cd chatapp
+cd chat-app
 ```
 
 2. Install server and client dependencies:
