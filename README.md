@@ -1,35 +1,44 @@
 # Chat App
 
-Aplicación de chat en tiempo real construida con MERN Stack (Mongo DB, Express, React y Node JS). A la vez que se implementa el protocolo WebSockets para la comunicación en tiempo real a través de la librería Socket.io.
+Real-time chat application built with **MERN Stack** (MongoDB, Express, React, and Node.js), using WebSocket protocol for real-time communication via Socket.io library.
 
-## Instalación
+## Features
 
-1. Clona el repositorio:
+- User registration and authentication.
+- Sending and receiving real-time messages.
+- List of conversations and messages.
+- Online user notifications.
+- Route protection with JWT-based authentication.
+- Sending confirmation emails for registration.
+
+## Applied Tecnologies
+- **Frontend**: React, Vite, TailwindCSS, DaisyUI, Zustand, React Router, Socket.io-client
+- **Backend**: Node.js, Express, Mongoose, JWT, Bcrypt, Nodemailer, Socket.io
+- **Base de Datos**: MongoDB
+
+## Installation
+
+1. Clone the repository:
 
 ```sh
-git clone https://github.com/tu-usuario/chatapp.git
+git clone https://github.com/FacuM87/chat-app.git
 cd chatapp
 ```
 
-2. Instala las dependencias del servidor y el cliente:
+2. Install server and client dependencies:
 ```sh
 npm install
 npm install --prefix client
 ```
-3. Configura las variables de entorno.
+3. Set up the environment variables.
 
-4. Inicia la aplicación localmente ejecutando el siguiente comando en consola:
+4. Start the application locally by running the following command in your terminal:
 ```sh
 npm run server
 ```
 
-## Scripts Disponibles
-- ```npm run server```: Inicia el servidor en modo de desarrollo.
-- ```npm run build```: Prepara la aplicación para producción.
-- ```npm run start```: Inicia el servidor en modo producción.
+## Scripts
+- ```npm run server```: Starts the server in development mode.
+- ```npm run build```: Prepares the application for production.
+- ```npm run start```: Starts the server in production mode.
 
-
-## Tecnologías Aplicadas
-- **Frontend**: React, Vite, TailwindCSS, DaisyUI, Zustand, React Router, Socket.io-client
-- **Backend**: Node.js, Express, Mongoose, JWT, Bcrypt, Nodemailer, Socket.io
-- **Base de Datos**: MongoDB
