@@ -23,7 +23,7 @@ const Message = ({message}) => {
           <time className="text-xs opacity-50">{formatDate(message.createdAt)}</time>
         </div>
         <div className="chat-bubble">{message.message}</div>
-        <div className="chat-footer opacity-50">Delivered</div>
+
       </div>
     </>
   );
