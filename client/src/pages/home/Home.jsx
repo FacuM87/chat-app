@@ -45,7 +45,7 @@ const Home = () => {
         </form>
         <div className="divider my-2"></div>
         <ConversationsList />
-        <div>
+        <div className="mt-auto">
           <div className="divider my-2"></div>
           <button onClick={handleLogout}>
             {loading && <div className="spinner"></div>}
