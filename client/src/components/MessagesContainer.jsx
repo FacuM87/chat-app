@@ -54,7 +54,7 @@ const MessagesContainer = () => {
   return (
     <div className="flex flex-col overflow-auto p-4 flex-grow max-w-screen-sm">
       {!selectedConversation && (
-        <div className="flex items-center justify-center h-full text-gray-500">
+        <div className="flex items-center justify-center h-full text-gray-400">
           Select a conversation
         </div>
       )}
