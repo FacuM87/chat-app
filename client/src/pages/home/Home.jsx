@@ -45,10 +45,13 @@ const Home = () => {
         </form>
         <div className="divider my-2"></div>
         <ConversationsList />
-        <button onClick={handleLogout}>
-          {loading && <div className="spinner"></div>}
-          <SlLogout className="absolute bottom-2 left-1 text-2xl cursor-pointer"/>
-        </button>
+        <div>
+          <div className="divider my-2"></div>
+          <button onClick={handleLogout}>
+            {loading && <div className="spinner"></div>}
+            <SlLogout className="absolute bottom-2 left-1 text-2xl cursor-pointer"/>
+          </button>
+        </div>
       </div>
       <ChatBox/>
     </div>
