@@ -9,7 +9,7 @@ const Message = ({message}) => {
 
   return (
     <>
-      <div className= {`chat ${fromMe ? "chat-end" : "chat-start"} `}>
+      <div className= {`chat ${fromMe ? "chat-end" : "chat-start"} max-w-full`}>
         <div className="chat-image avatar">
           <div className="w-10 rounded-full">
             <img
@@ -22,7 +22,7 @@ const Message = ({message}) => {
           {}
           <time className="text-xs opacity-50">{formatDate(message.createdAt)}</time>
         </div>
-        <div className="chat-bubble max-w-full break-words">{message.message}</div>
+        <div className="chat-bubble max-w-[90%] break-words">{message.message}</div>
 
       </div>
     </>

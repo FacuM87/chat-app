@@ -12,7 +12,7 @@ const MessagesContainer = () => {
     setSelectedConversation,
   } = useConversation();
   const lastMessageRef = useRef();
-  useListenMessages()
+  useListenMessages();
 
   useEffect(() => {
     const getMessages = async () => {
@@ -52,8 +52,12 @@ const MessagesContainer = () => {
   }, [messages]);
 
   return (
-    <div className="flex flex-col overflow-auto p-4 flex-grow">
-      {!selectedConversation && "Select a conversation"}
+    <div className="flex flex-col overflow-auto p-4 flex-grow max-w-screen-sm">
+      {!selectedConversation && (
+        <div className="flex items-center justify-center h-full text-gray-500">
+          Select a conversation
+        </div>
+      )}
       {selectedConversation && messages.length === 0 && "Send a message"}
 
       {selectedConversation &&
