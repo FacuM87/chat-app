@@ -1,6 +1,6 @@
 # Chat App
 
-Real-time chat application built with **MERN Stack** (MongoDB, Express, React, and Node.js), using WebSocket protocol for real-time communication via Socket.io library.
+Real-time chat application built using **MERN Stack** (MongoDB, Express, React, and Node.js), using WebSocket protocol for real-time communication via Socket.io library.
 
 - Deploy -> [Render](https://facu-chat-app.onrender.com)
 
