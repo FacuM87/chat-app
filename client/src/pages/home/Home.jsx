@@ -33,7 +33,7 @@ const Home = () => {
   };
 
   return (
-    <div className="flex sm:h-[450px] md:h-[550px] rounded-lg overflow-hidden bg-gray-600">
+    <div className="flex md:h-[550px] rounded-lg overflow-hidden bg-gray-600">
       <div className="flex-col m-4 relative">
         <form className="">
           <label className="input input-bordered flex items-center gap-2">
