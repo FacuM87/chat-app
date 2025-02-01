@@ -16,7 +16,7 @@ Real-time chat application built with **MERN Stack** (MongoDB, Express, React, a
 ## Applied Tecnologies
 - **Frontend**: React, Vite, TailwindCSS, DaisyUI, Zustand, React Router, Socket.io-client
 - **Backend**: Node.js, Express, Mongoose, JWT, Bcrypt, Nodemailer, Socket.io
-- **Base de Datos**: MongoDB
+- **Database**: MongoDB
 
 ## Installation
 
