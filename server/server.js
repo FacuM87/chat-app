@@ -7,6 +7,7 @@ import messageRoutes from './routes/messages.routes.js'
 import usersRoutes from './routes/users.routes.js'
 import { connectToMongoDB } from './db/connectToMongo.js'
 import {app, server } from './socket/socket.js'
+import initializeGeneralChat from './utils/generalChatInit.js'
 
 import cors from 'cors' // SOLO PARA DESARROLLO
 
@@ -34,8 +35,9 @@ app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, "client", "dist", "index.html"))
 })
 
-server.listen(process.env.PORT, () => {
-    connectToMongoDB()
+server.listen(process.env.PORT, async () => {
+    await connectToMongoDB()
+    await initializeGeneralChat()
     console.log(`Server listening on port ${process.env.PORT}`)
 })
 
