@@ -28,6 +28,7 @@ app.use("/api/auth", authRoutes)
 app.use("/api/messages", messageRoutes)
 app.use("/api/users", usersRoutes)
 
+
 app.use(express.static(path.join(__dirname, "/client/dist")))
 
 app.get("*", (req, res) => {
@@ -39,3 +40,7 @@ server.listen(process.env.PORT, () => {
     console.log(`Server listening on port ${process.env.PORT}`)
 })
 
+/*UptimeRobot Monitor endpoint*/
+app.head("/", (req, res) => {
+    res.status(200).end();
+});
