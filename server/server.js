@@ -40,7 +40,4 @@ server.listen(process.env.PORT, () => {
     console.log(`Server listening on port ${process.env.PORT}`)
 })
 
-/*UptimeRobot Monitor endpoint*/
-app.head("/", (req, res) => {
-    res.status(200).end();
-});
+
